@@ -1,8 +1,8 @@
 import api from '@/utils/api'
 import { useQuery } from '@tanstack/react-query'
 
-const fetchPopularMovies = () => {
-  return api.get('/movie/popular', {
+const fetchUncomingMovies = () => {
+  return api.get('/movie/upcoming', {
     params: {
       language: 'ko-KR',
       region: 'KR',
@@ -10,10 +10,10 @@ const fetchPopularMovies = () => {
   })
 }
 
-export const usePopularMoviesQuery = () => {
+export const useUncomingMoviesQuery = () => {
   return useQuery({
-    queryKey: ['movie-popular'],
-    queryFn: fetchPopularMovies,
+    queryKey: ['movie-uncoming'],
+    queryFn: fetchUncomingMovies,
     select: (result) => result.data,
   })
 }

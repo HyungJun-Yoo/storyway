@@ -1,0 +1,36 @@
+.carousel-container {
+  overflow: hidden;
+  height: 440px;
+}
+
+.react-multi-carousel-track {
+  display: flex;
+  gap: 20px;
+}
+
+.carousel-item {
+  width: 220px !important;
+  height: 330px;
+}
+
+.react-multiple-carousel__arrow {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.react-multiple-carousel__arrow:hover {
+  transform: scale(1.1);
+}
+
+.react-multiple-carousel__arrow--left {
+  left: 10px;
+}
+
+.react-multiple-carousel__arrow--right {
+  right: 10px;
+}
