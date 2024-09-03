@@ -38,7 +38,7 @@ const MovieCard = ({ movie, index }) => {
   return (
     <div className='h-[460px] relative'>
       <div
-        className='relative group w-full min-w-[220px] h-[360px] bg-contain bg-center bg-no-repeat rounded-lg cursor-pointer transition-transform transform hover:scale-105'
+        className='relative group w-full min-w-[220px] h-[360px] bg-cover bg-center bg-no-repeat rounded-lg cursor-pointer transition-transform transform hover:scale-105'
         style={{ backgroundImage: `url(${backgroundPath()})` }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -46,8 +46,10 @@ const MovieCard = ({ movie, index }) => {
         {isHovered && (
           <div className='w-full min-w-[220px] h-[360px] absolute inset-0 bg-black opacity-70 flex flex-col justify-center items-center text-white transition-transform transform z-10'>
             <div className='h-full flex flex-col justify-center items-center p-1 sm:p-4'>
-              <h3 className='text-lg font-bold text-center'>{title}</h3>
-              <p className='text-sm'>
+              <h3 className='text-lg font-bold text-center text-cyan-400'>
+                {title}
+              </h3>
+              <p className='text-sm text-cyan-400'>
                 개봉일: {new Date(release_date).toISOString()?.split('T')[0]}
               </p>
             </div>
@@ -66,7 +68,7 @@ const MovieCard = ({ movie, index }) => {
           <div
             className={`${
               isDarkMode ? 'text-slate-200' : 'text-gray-700'
-            } text-wrap text-base`}
+            } text-wrap text-base font-bold`}
           >
             {title}
           </div>
