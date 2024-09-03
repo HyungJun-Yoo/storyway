@@ -23,7 +23,6 @@ const MovieSlider = ({ type, movies, responsive }) => {
       <h3 className='text-3xl font-bold pl-4'>{headerType()}</h3>
       <div className='mt-8 mb-8'>
         <Carousel
-          infinite={true}
           centerMode={false}
           responsive={responsive}
           itemClass='carousel-item'

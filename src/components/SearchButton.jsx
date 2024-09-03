@@ -18,4 +18,4 @@ const SearchButton = ({ isSearchOpen, onClick }) => {
   )
 }
 
-export default SearchButton
+export default React.memo(SearchButton)

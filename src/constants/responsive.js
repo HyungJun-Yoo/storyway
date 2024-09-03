@@ -1,8 +1,8 @@
 export const responsive = {
   fullDesktop: {
     breakpoint: { max: 3000, min: 1400 },
-    items: 6,
-    slidesToSlide: 6,
+    items: 5,
+    slidesToSlide: 5,
   },
   desktop: {
     breakpoint: { max: 1400, min: 1024 },

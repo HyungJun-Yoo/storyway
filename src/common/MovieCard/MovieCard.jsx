@@ -36,7 +36,7 @@ const MovieCard = ({ movie, index }) => {
   }
 
   return (
-    <div className='h-[460px] relative'>
+    <div className='h-[480px] relative p-4'>
       <div
         className='relative group w-full min-w-[220px] h-[360px] bg-cover bg-center bg-no-repeat rounded-lg cursor-pointer transition-transform transform hover:scale-105'
         style={{ backgroundImage: `url(${backgroundPath()})` }}
@@ -60,7 +60,7 @@ const MovieCard = ({ movie, index }) => {
         <div
           className={`${
             isDarkMode ? 'text-white' : 'text-black'
-          } text-4xl  font-sans font-semibold`}
+          } text-3xl  font-sans font-semibold`}
         >
           {index + 1}
         </div>
@@ -68,7 +68,7 @@ const MovieCard = ({ movie, index }) => {
           <div
             className={`${
               isDarkMode ? 'text-slate-200' : 'text-gray-700'
-            } text-wrap text-base font-bold`}
+            } text-nowrap text-base font-bold overflow-hidden text-ellipsis max-w-[200px]`}
           >
             {title}
           </div>
@@ -83,8 +83,12 @@ const MovieCard = ({ movie, index }) => {
             ))}
           </div>
           <div className='flex gap-2 items-center'>
-            <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
-            <span className='text-sm'>{vote_average.toFixed(1)}</span>
+            {vote_average.toFixed(1) !== '0.0' && (
+              <>
+                <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
+                <span className='text-sm'>{vote_average.toFixed(1)}</span>
+              </>
+            )}
           </div>
         </div>
       </div>
