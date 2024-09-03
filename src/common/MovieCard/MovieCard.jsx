@@ -19,7 +19,7 @@ const MovieCard = ({ movie, index }) => {
   const [isHovered, setIsHovered] = useState(false)
 
   const backgroundPath = () => {
-    return `https://image.tmdb.org/t/p/original/${backdrop_path}`
+    return `https://image.tmdb.org/t/p/w500/${poster_path}`
   }
 
   const showGenre = (genreIdList) => {
@@ -36,19 +36,19 @@ const MovieCard = ({ movie, index }) => {
   }
 
   return (
-    <div className='h-[300px] relative'>
+    <div className='h-[460px] relative'>
       <div
-        className='relative group w-full min-w-[220px] h-[160px] bg-cover bg-center bg-no-repeat rounded-lg cursor-pointer transition-transform transform hover:scale-105'
+        className='relative group w-full min-w-[220px] h-[360px] bg-contain bg-center bg-no-repeat rounded-lg cursor-pointer transition-transform transform hover:scale-105'
         style={{ backgroundImage: `url(${backgroundPath()})` }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {isHovered && (
-          <div className='w-full min-w-[220px] h-[160px] absolute inset-0 bg-black opacity-70 flex flex-col justify-center items-center text-white transition-transform transform z-10'>
+          <div className='w-full min-w-[220px] h-[360px] absolute inset-0 bg-black opacity-70 flex flex-col justify-center items-center text-white transition-transform transform z-10'>
             <div className='h-full flex flex-col justify-center items-center p-1 sm:p-4'>
               <h3 className='text-lg font-bold text-center'>{title}</h3>
               <p className='text-sm'>
-                개봉일: {new Date(release_date).toISOString().split('T')[0]}
+                개봉일: {new Date(release_date).toISOString()?.split('T')[0]}
               </p>
             </div>
           </div>

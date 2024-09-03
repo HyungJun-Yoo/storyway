@@ -6,15 +6,15 @@ import './MovieSlider.style.css'
 const MovieSlider = ({ type, movies, responsive }) => {
   const headerType = () => {
     if (type === 'popular') {
-      return '인기 영화'
+      return '인기'
     }
 
     if (type === 'top_rate') {
-      return '최고 평점 영화'
+      return '최고 평점'
     }
 
     if (type === 'uncoming') {
-      return '개봉 예정 영화'
+      return '개봉 예정'
     }
   }
 

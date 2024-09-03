@@ -14,7 +14,6 @@ const Banner = () => {
     return <Error />
   }
 
-  console.log(data)
   const length = data?.results?.length
   if (length === 0) return <Error />
 
@@ -37,8 +36,8 @@ const Banner = () => {
         <h1 className='text-white text-xl sm:text-3xl font-bold mb-4 drop-shadow-lg'>
           {selectData.title}
         </h1>
-        <div className='w-[250px] sm:w-[400px] md:w-[500px] lg:w-[600px]'>
-          <p className='text-white text-base sm:text-lg drop-shadow-md line-clamp-3'>
+        <div className='w-[250px] sm:w-[400px] md:w-[500px] lg:w-[600px] xl:w-[700px]'>
+          <p className='text-white text-base sm:text-lg drop-shadow-md line-clamp-5'>
             {selectData.overview}
           </p>
         </div>
