@@ -10,14 +10,14 @@ import { useUncomingMoviesQuery } from '@/hooks/useUpcomingMovies'
 import MovieSlider from '@/common/MovieSlider/MovieSlider'
 import { responsive } from '@/constants/responsive'
 
-const PopularMovieSlide = ({ title }) => {
+const PopularMovieSlide = ({ type }) => {
   let queryResult
 
-  if (title === 'popular') {
+  if (type === 'popular') {
     queryResult = usePopularMoviesQuery()
-  } else if (title === 'top_rate') {
+  } else if (type === 'top_rate') {
     queryResult = useTopRatedMoviesQuery()
-  } else if (title === 'uncoming') {
+  } else if (type === 'uncoming') {
     queryResult = useUncomingMoviesQuery()
   } else {
     return <Error />
@@ -37,11 +37,7 @@ const PopularMovieSlide = ({ title }) => {
 
   return (
     <div className='mt-8'>
-      <MovieSlider
-        title={title}
-        movies={data.results}
-        responsive={responsive}
-      />
+      <MovieSlider type={type} movies={data.results} responsive={responsive} />
     </div>
   )
 }

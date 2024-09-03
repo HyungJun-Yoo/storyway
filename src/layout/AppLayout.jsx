@@ -29,7 +29,7 @@ const AppLayout = () => {
     <div
       className={`${
         isDarkMode ? 'bg-black text-white' : 'bg-white text-black'
-      } min-h-screen min-w-[350px]`}
+      } min-h-screen min-w-[350px] relative`}
     >
       <div className='flex justify-between items-center p-1 sm:p-2 h-[120px]'>
         <nav className='flex gap-28 xl:gap-36'>

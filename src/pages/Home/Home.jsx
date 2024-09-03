@@ -6,9 +6,11 @@ const Home = () => {
   return (
     <div>
       <Banner />
-      <PopularMovieSlide title={'popular'} />
-      <PopularMovieSlide title={'top_rate'} />
-      <PopularMovieSlide title={'uncoming'} />
+      <div className='p-4'>
+        <PopularMovieSlide type={'popular'} />
+        <PopularMovieSlide type={'top_rate'} />
+        <PopularMovieSlide type={'uncoming'} />
+      </div>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 .carousel-container {
-  overflow: hidden;
-  padding: 36px;
+  /* overflow: hidden; */
+  position: static !important;
 }
 
 .react-multi-carousel-track {
@@ -22,9 +22,11 @@
 }
 
 .react-multiple-carousel__arrow--left {
-  left: 10px;
+  position: absolute;
+  left: 0;
 }
 
 .react-multiple-carousel__arrow--right {
-  right: 10px;
+  position: absolute;
+  right: 0;
 }

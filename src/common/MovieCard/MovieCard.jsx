@@ -1,59 +1,91 @@
-import { useMovieGenreQuery } from '@/hooks/useMovieGenre'
 import React, { useState } from 'react'
+import useStore from '@/store/store'
+import { useMovieGenreQuery } from '@/hooks/useMovieGenre'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faL, faStar } from '@fortawesome/free-solid-svg-icons'
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, index }) => {
+  const { isDarkMode, toggleDarkMode } = useStore()
   const { data: genreData } = useMovieGenreQuery()
-  console.log(genreData)
 
-  const { title, backdrop_path, genre_ids, release_date } = movie
+  const {
+    title,
+    backdrop_path,
+    genre_ids,
+    release_date,
+    vote_average,
+    poster_path,
+  } = movie
   const [isHovered, setIsHovered] = useState(false)
 
   const backgroundPath = () => {
-    return `https://media.themoviedb.org/t/p/original/${backdrop_path}`
+    return `https://image.tmdb.org/t/p/original/${backdrop_path}`
   }
 
   const showGenre = (genreIdList) => {
     if (!genreData) return []
-    const ganreNameList = genreIdList.map((id) => {
-      const genreObj = genreData.find((ganre) => ganre.id === id)
-      return genreObj.name
-    })
 
-    return ganreNameList
+    const ganreNameList = genreIdList
+      .map((id) => {
+        const genreObj = genreData.find((ganre) => ganre.id === id)
+        return genreObj ? genreObj.name : null
+      })
+      .filter(Boolean)
+
+    return ganreNameList.slice(0, 3)
   }
 
   return (
-    <div
-      className='relative group w-[140px] sm:w-[180px] lg:w-[250px] h-[200px] sm:h-[250px] lg:h-[300px] bg-cover bg-center rounded-lg overflow-hidden cursor-pointer shadow-lg transition-transform transform hover:scale-105'
-      style={{ backgroundImage: `url(${backgroundPath()})` }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {isHovered && (
-        <div className='w-[140px] sm:w-[180px] lg:w-[250px] h-[200px] sm:h-[250px] lg:h-[300px] absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center text-white'>
-          <div className='w-[140px] sm:w-[180px] lg:w-[250px] flex text-sm gap-2 mt-4 overflow-hidden whitespace-nowrap text-ellipsis'>
+    <div className='h-[300px] relative'>
+      <div
+        className='relative group w-full min-w-[220px] h-[160px] bg-cover bg-center bg-no-repeat rounded-lg cursor-pointer transition-transform transform hover:scale-105'
+        style={{ backgroundImage: `url(${backgroundPath()})` }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {isHovered && (
+          <div className='w-full min-w-[220px] h-[160px] absolute inset-0 bg-black opacity-70 flex flex-col justify-center items-center text-white transition-transform transform z-10'>
+            <div className='h-full flex flex-col justify-center items-center p-1 sm:p-4'>
+              <h3 className='text-lg font-bold text-center'>{title}</h3>
+              <p className='text-sm'>
+                개봉일: {new Date(release_date).toISOString().split('T')[0]}
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className='flex items-center gap-2 mt-2'>
+        <div
+          className={`${
+            isDarkMode ? 'text-white' : 'text-black'
+          } text-4xl  font-sans font-semibold`}
+        >
+          {index + 1}
+        </div>
+        <div className='flex flex-col gap-2'>
+          <div
+            className={`${
+              isDarkMode ? 'text-slate-200' : 'text-gray-700'
+            } text-wrap text-base`}
+          >
+            {title}
+          </div>
+          <div className='flex gap-2 flex-wrap'>
             {showGenre(genre_ids).map((genre, index) => (
-              <p className=''>{genre}</p>
+              <div
+                key={`${genre}-${index}`}
+                className='flex justify-center text-sm bg-red-400 rounded-full p-1 min-w-[36px]'
+              >
+                {genre}
+              </div>
             ))}
           </div>
-
-          <div className='h-full flex flex-col justify-center p-1 sm:p-4'>
-            <h3 className='text-lg font-bold'>{title}</h3>
-
-            <p className='text-sm'>
-              개봉일: {new Date(release_date).toLocaleDateString()}
-            </p>
-            <a
-              href={`https://www.youtube.com/results?search_query=${title} 예고편`}
-              target='_blank'
-              rel='noopener noreferrer'
-              className='mt-2 text-blue-400 hover:underline'
-            >
-              예고편 보기
-            </a>
+          <div className='flex gap-2 items-center'>
+            <FontAwesomeIcon icon={faStar} className='text-yellow-500' />
+            <span className='text-sm'>{vote_average.toFixed(1)}</span>
           </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }
