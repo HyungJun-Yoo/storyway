@@ -31,7 +31,7 @@ const AppLayout = () => {
         isDarkMode ? 'bg-black text-white' : 'bg-white text-black'
       } min-h-screen min-w-[350px]`}
     >
-      <div className='flex justify-between items-center p-4 h-[120px]'>
+      <div className='flex justify-between items-center p-1 sm:p-2 h-[120px]'>
         <nav className='flex gap-28 xl:gap-36'>
           <Logo />
           <ul className='hidden sm:flex items-center gap-4'>
@@ -48,7 +48,7 @@ const AppLayout = () => {
             ))}
           </ul>
         </nav>
-        <div className='flex gap-4 mr-4'>
+        <div className='flex gap-4 mr-1 sm:mr-2'>
           <SearchButton isSearchOpen={isSearchOpen} onClick={toggleSearch} />
           <ThemeButton />
         </div>

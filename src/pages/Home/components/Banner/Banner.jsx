@@ -29,10 +29,10 @@ const Banner = () => {
 
   return (
     <div
-      className='w-full min-h-[60vh] bg-cover bg-center bg-no-repeat flex items-end relative'
+      className='w-full min-h-[60vh] bg-cover bg-center bg-no-repeat flex items-end relative p-2'
       style={{ backgroundImage: `url(${backgroundPath()})` }}
     >
-      <div className='absolute inset-0 bg-black opacity-50' />
+      <div className='absolute inset-0 bg-black opacity-50 p-2' />
       <div className='flex flex-col p-6 relative z-10'>
         <h1 className='text-white text-xl sm:text-3xl font-bold mb-4 drop-shadow-lg'>
           {selectData.title}

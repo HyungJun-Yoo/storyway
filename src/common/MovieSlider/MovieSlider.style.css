@@ -1,16 +1,10 @@
 .carousel-container {
   overflow: hidden;
-  height: 440px;
+  padding: 36px;
 }
 
 .react-multi-carousel-track {
   display: flex;
-  gap: 20px;
-}
-
-.carousel-item {
-  width: 220px !important;
-  height: 330px;
 }
 
 .react-multiple-carousel__arrow {
