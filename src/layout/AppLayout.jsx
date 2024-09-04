@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import ThemeButton from '@/components/ThemeButton'
 import useStore from '@/store/store'
 import SearchButton from '@/components/SearchButton'
@@ -11,10 +11,14 @@ const NAVLINKS = ['Home', 'Movies']
 const AppLayout = () => {
   const { isDarkMode, toggleDarkMode } = useStore()
   const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [selectedNav, setSelectedNav] = useState('Home')
+  const [selectedNav, setSelectedNav] = useState(() => {
+    return localStorage.getItem('selectedNav') || ''
+  })
   const [keyword, setKeyword] = useState('')
+  const [message, setMessage] = useState('')
 
   const navigate = useNavigate()
+  const location = useLocation()
 
   const toggleSearch = useCallback(() => {
     setIsSearchOpen((prev) => !prev)
@@ -24,6 +28,7 @@ const AppLayout = () => {
     (navlink) => {
       navlink === 'Home' ? navigate('/') : navigate(`/${navlink}`)
       setSelectedNav(navlink)
+      localStorage.setItem('selectedNav', navlink)
     },
     [navigate]
   )
@@ -32,13 +37,23 @@ const AppLayout = () => {
     event.preventDefault()
 
     if (keyword === '' || !keyword) {
+      setMessage('검색어를 입력해주세요')
       return
     }
 
     navigate(`/movies?q=${keyword}`)
     setIsSearchOpen(false)
     setKeyword('')
+    setMessage('')
   }
+
+  useEffect(() => {
+    if (location.pathname === '/' || location.pathname === '/home') {
+      setSelectedNav('Home')
+    } else if (location.pathname === '/movies') {
+      setSelectedNav('Movies')
+    }
+  }, [location.pathname])
 
   return (
     <div
@@ -91,6 +106,8 @@ const AppLayout = () => {
           keyword={keyword}
           setKeyword={setKeyword}
           setIsSearchOpen={setIsSearchOpen}
+          message={message}
+          setMessage={setMessage}
         />
       )}
 

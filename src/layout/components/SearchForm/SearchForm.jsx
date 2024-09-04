@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import useStore from '@/store/store'
@@ -12,9 +12,12 @@ const SearchForm = ({
   keyword,
   setKeyword,
   setIsSearchOpen,
+  message,
+  setMessage,
 }) => {
   const { isDarkMode, toggleDarkMode } = useStore()
   const { data, isLoading, isError } = useKoreanMoviesQuery()
+
   const navigate = useNavigate()
 
   if (isLoading) {
@@ -28,6 +31,7 @@ const SearchForm = ({
     navigate(`/movies/${id}`)
     setIsSearchOpen(false)
     setKeyword('')
+    setMessage('')
   }
 
   const koreanMovieData = data?.results?.slice(0, 10) || []
@@ -64,6 +68,7 @@ const SearchForm = ({
             />
           </button>
         </div>
+        {message && <div className='text-red-500 mt-4'>{message}</div>}
       </form>
 
       <div className='w-full max-w-[1280px] flex flex-1 p-12 sm:pl-36 sm:pr-36'>

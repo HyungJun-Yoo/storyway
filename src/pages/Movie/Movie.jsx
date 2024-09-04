@@ -57,13 +57,22 @@ const Movie = () => {
   if (isError) {
     return <Error />
   }
+  if (data?.total_results === 0) {
+    return (
+      <div className='h-[50vh] flex justify-center items-center'>
+        <p className='text-4xl font-mono'>
+          "{keyword}"에 대한 검색 결과가 없습니다.
+        </p>
+      </div>
+    )
+  }
 
-  const totalPages = Math.ceil(data?.total_pages / 20)
+  const totalPages = data?.total_pages
   const pageNumbers = getPageNumbers(page, totalPages)
 
   return (
     <div className='w-full'>
-      <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-10'>
+      <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-10'>
         {data?.results?.map((movie, index) => (
           <MovieCard
             key={`${movie.title}-${index}`}
@@ -73,45 +82,46 @@ const Movie = () => {
         ))}
       </div>
 
-      {/* 페이지 네비게이션 */}
-      <div className='flex items-center justify-center p-10 gap-4 sm:gap-8'>
-        <button
-          onClick={handlePrevPage}
-          disabled={page === 1}
-          className={`bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ${
-            page === 1 ? 'opacity-20 cursor-not-allowed' : ''
-          }`}
-        >
-          <FontAwesomeIcon icon={faChevronLeft} /> 이전
-        </button>
+      {totalPages > 1 && (
+        <div className='flex items-center justify-center p-10 gap-4 sm:gap-8'>
+          <button
+            onClick={handlePrevPage}
+            disabled={page === 1}
+            className={`bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ${
+              page === 1 ? 'opacity-20 cursor-not-allowed' : ''
+            }`}
+          >
+            <FontAwesomeIcon icon={faChevronLeft} /> 이전
+          </button>
 
-        {/* 페이지 번호 렌더링 */}
-        <div className='flex gap-2 sm:gap-4'>
-          {pageNumbers.map((number) => (
-            <span
-              key={number}
-              onClick={() => handlePageClick(number - 1)}
-              className={`bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition cursor-pointer ${
-                number === page ? 'bg-blue-500 text-white' : ''
-              }`}
-            >
-              {number}
-            </span>
-          ))}
+          {/* 페이지 번호 렌더링 */}
+          <div className='flex gap-2 sm:gap-4'>
+            {pageNumbers.map((number) => (
+              <span
+                key={number}
+                onClick={() => handlePageClick(number - 1)}
+                className={`bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition cursor-pointer ${
+                  number === page ? 'bg-blue-500 text-white' : ''
+                }`}
+              >
+                {number}
+              </span>
+            ))}
+          </div>
+
+          <button
+            onClick={handleNextPage}
+            disabled={page === totalPages}
+            className={`bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ${
+              page === Math.ceil(data?.total_pages / 20)
+                ? 'opacity-20 cursor-not-allowed'
+                : ''
+            }`}
+          >
+            다음 <FontAwesomeIcon icon={faChevronRight} />
+          </button>
         </div>
-
-        <button
-          onClick={handleNextPage}
-          disabled={page === totalPages}
-          className={`bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ${
-            page === Math.ceil(data?.total_pages / 20)
-              ? 'opacity-20 cursor-not-allowed'
-              : ''
-          }`}
-        >
-          다음 <FontAwesomeIcon icon={faChevronRight} />
-        </button>
-      </div>
+      )}
     </div>
   )
 }
