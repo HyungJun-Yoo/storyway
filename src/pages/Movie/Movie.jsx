@@ -3,7 +3,6 @@ import Loading from '@/components/Loading'
 import { useSearchMoviesQuery } from '@/hooks/useSearchMovies'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import ReactPaginate from 'react-paginate'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faChevronLeft,
@@ -77,7 +76,7 @@ const Movie = () => {
 
   return (
     <div className='w-full'>
-      <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-10'>
+      <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 p-8'>
         {data?.results?.map((movie, index) => (
           <MovieCard
             key={`${movie.title}-${index}`}
