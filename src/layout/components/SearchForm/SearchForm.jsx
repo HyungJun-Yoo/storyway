@@ -14,6 +14,8 @@ const SearchForm = ({
   setIsSearchOpen,
   message,
   setMessage,
+  searchList,
+  setSearchList,
 }) => {
   const { isDarkMode, toggleDarkMode } = useStore()
   const { data, isLoading, isError } = useKoreanMoviesQuery()
@@ -34,6 +36,18 @@ const SearchForm = ({
     setMessage('')
   }
 
+  const removeSearchList = () => {
+    setSearchList([])
+    localStorage.removeItem('searchList')
+  }
+
+  const handleSearchListClick = (search) => {
+    navigate(`/movies?q=${search}`)
+    setIsSearchOpen(false)
+    setKeyword('')
+    setMessage('')
+  }
+
   const koreanMovieData = data?.results?.slice(0, 10) || []
 
   return (
@@ -44,7 +58,7 @@ const SearchForm = ({
     >
       <form
         onSubmit={(event) => searchByKeyword(event)}
-        className='w-full max-w-[1280px] bg-opacity-75 sm:pl-36 sm:pr-36'
+        className='w-full max-w-[1280px] bg-opacity-75 pl-4 pr-4 sm:pl-8 sm:pr-8 md:pl-36 md:pr-36'
       >
         <div className='flex mt-4 rounded shadow-lg relative'>
           <input
@@ -71,11 +85,40 @@ const SearchForm = ({
         {message && <div className='text-red-500 mt-4'>{message}</div>}
       </form>
 
-      <div className='w-full max-w-[1280px] flex flex-1 p-12 sm:pl-36 sm:pr-36'>
-        <div className='flex-1 flex font-bold border-r-2 border-white'>
-          <div className='text-xl font-bold'>최근 검색어</div>
+      <div className='w-full max-w-[1280px] flex justify-center flex-1 pt-12 pb-12 pl-4 pr-4 md:pl-36 md:pr-36'>
+        <div className='flex-1 flex flex-col font-bold sm:border-r-2 sm:border-white'>
+          <div className='flex flex-shrink gap-4 justify-center sm:justify-start sm:min-w-[253px]'>
+            <div className='text-xl font-bold text-nowrap'>최근 검색어</div>
+            {searchList.length > 0 && (
+              <button
+                onClick={removeSearchList}
+                className='text-sm text-nowrap border p-1 text-gray-100 border-gray-100 opacity-30 hover:opacity-70'
+              >
+                검색 내역 지우기
+              </button>
+            )}
+          </div>
+          <ul className='flex flex-col mt-4 gap-2 pl-4 pt-4 sm:pl-0 sm:pt-0'>
+            {searchList.length > 0 ? (
+              searchList.map((search, index) => (
+                <li
+                  onClick={() => handleSearchListClick(search)}
+                  className='flex items-center gap-2 cursor-pointer'
+                  key={`${search}-${index}`}
+                >
+                  <p className='font-sans text-sm sm:text-base text-nowrap'>
+                    {search.length > 20 ? `${search.slice(0, 20)}...` : search}
+                  </p>
+                </li>
+              ))
+            ) : (
+              <div className='text-sm text-gray-100 opacity-60'>
+                검색 내역이 없습니다.
+              </div>
+            )}
+          </ul>
         </div>
-        <div className='flex-1 flex flex-col ml-12'>
+        <div className='hidden sm:flex flex-1 flex-col ml-12'>
           <div className='text-xl font-bold'>실시간 인기 검색어</div>
           <ul className='flex flex-col mt-4 gap-2'>
             {koreanMovieData.map((movie, index) => (
@@ -86,7 +129,9 @@ const SearchForm = ({
               >
                 <p className='w-10 text-red-800 text-xl'>{index + 1}</p>
                 <p className='font-serif text-base text-nowrap'>
-                  {movie.title}
+                  {movie.title.length > 20
+                    ? `${movie.title.slice(0, 20)}...`
+                    : movie.title}
                 </p>
               </li>
             ))}

@@ -14,7 +14,11 @@ const ThemeButton = () => {
         isDarkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'
       }`}
     >
-      <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} size='lg' />
+      <FontAwesomeIcon
+        icon={isDarkMode ? faSun : faMoon}
+        size='lg'
+        className={`${isDarkMode ? 'text-yellow-400' : 'text-yellow-600'}`}
+      />
     </button>
   )
 }

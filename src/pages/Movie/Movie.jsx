@@ -60,9 +60,14 @@ const Movie = () => {
   if (data?.total_results === 0) {
     return (
       <div className='h-[50vh] flex justify-center items-center'>
-        <p className='text-4xl font-mono'>
-          "{keyword}"에 대한 검색 결과가 없습니다.
-        </p>
+        <div className='flex flex-col justify-center'>
+          <p className='text-4xl font-mono'>
+            "{keyword.length > 10 ? `${keyword.slice(0, 10)}...` : keyword}"
+          </p>
+          <p className='text-xl sm:text-4xl font-mono'>
+            에 대한 검색 결과가 없습니다.
+          </p>
+        </div>
       </div>
     )
   }
@@ -87,7 +92,7 @@ const Movie = () => {
           <button
             onClick={handlePrevPage}
             disabled={page === 1}
-            className={`bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ${
+            className={`bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition ${
               page === 1 ? 'opacity-20 cursor-not-allowed' : ''
             }`}
           >
@@ -101,7 +106,7 @@ const Movie = () => {
                 key={number}
                 onClick={() => handlePageClick(number - 1)}
                 className={`bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition cursor-pointer ${
-                  number === page ? 'bg-blue-500 text-white' : ''
+                  number === page ? 'bg-gray-500 text-white' : ''
                 }`}
               >
                 {number}
@@ -112,7 +117,7 @@ const Movie = () => {
           <button
             onClick={handleNextPage}
             disabled={page === totalPages}
-            className={`bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ${
+            className={`bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition ${
               page === Math.ceil(data?.total_pages / 20)
                 ? 'opacity-20 cursor-not-allowed'
                 : ''

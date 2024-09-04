@@ -16,6 +16,10 @@ const AppLayout = () => {
   })
   const [keyword, setKeyword] = useState('')
   const [message, setMessage] = useState('')
+  const [searchList, setSearchList] = useState(() => {
+    const savedSearchList = localStorage.getItem('searchList')
+    return savedSearchList ? JSON.parse(savedSearchList) : []
+  })
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -41,6 +45,15 @@ const AppLayout = () => {
       return
     }
 
+    setSearchList((prevList) => {
+      const updatedList = [keyword, ...prevList.filter((k) => k !== keyword)]
+      if (updatedList.length > 10) {
+        updatedList.pop()
+      }
+      localStorage.setItem('searchList', JSON.stringify(updatedList))
+      return updatedList
+    })
+
     navigate(`/movies?q=${keyword}`)
     setIsSearchOpen(false)
     setKeyword('')
@@ -61,7 +74,11 @@ const AppLayout = () => {
         isDarkMode ? 'bg-black text-white' : 'bg-white text-black'
       } min-h-screen min-w-[350px] relative`}
     >
-      <div className='flex justify-between items-center p-1 sm:p-2 h-[120px]'>
+      <div
+        className={`flex justify-between items-center p-1 sm:p-2 h-[120px] ${
+          isDarkMode ? '' : 'bg-slate-50'
+        }`}
+      >
         <nav className='flex gap-28 xl:gap-36'>
           <Logo />
           <ul className='hidden sm:flex items-center gap-4'>
@@ -108,6 +125,8 @@ const AppLayout = () => {
           setIsSearchOpen={setIsSearchOpen}
           message={message}
           setMessage={setMessage}
+          searchList={searchList}
+          setSearchList={setSearchList}
         />
       )}
 
