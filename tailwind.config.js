@@ -12,5 +12,5 @@ export default {
       customSm: '600px',
     },
   },
-  plugins: [require('@tailwindcss/line-clamp')],
+  plugins: [],
 }

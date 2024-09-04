@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import useStore from '@/store/store'
 import { useMovieGenreQuery } from '@/hooks/useMovieGenre'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faL, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
+import undefindImage from '@/assets/undefindImage.jpg'
 
 const MovieCard = ({ movie, index }) => {
   const { isDarkMode, toggleDarkMode } = useStore()
@@ -19,7 +20,11 @@ const MovieCard = ({ movie, index }) => {
   const [isHovered, setIsHovered] = useState(false)
 
   const backgroundPath = () => {
-    return `https://image.tmdb.org/t/p/w500/${poster_path}`
+    if (poster_path) {
+      return `https://image.tmdb.org/t/p/w500/${poster_path}`
+    }
+
+    return undefindImage
   }
 
   const showGenre = (genreIdList) => {

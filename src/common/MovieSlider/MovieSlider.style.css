@@ -23,10 +23,10 @@
 
 .react-multiple-carousel__arrow--left {
   position: absolute;
-  left: 0;
+  left: 10px;
 }
 
 .react-multiple-carousel__arrow--right {
   position: absolute;
-  right: 0;
+  right: 10px;
 }
