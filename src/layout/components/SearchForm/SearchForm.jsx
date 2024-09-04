@@ -53,7 +53,7 @@ const SearchForm = ({
   return (
     <div
       className={`absolute flex flex-col items-center w-full min-h-[400px] z-50 ${
-        isDarkMode ? 'bg-gray-950' : 'bg-slate-100'
+        isDarkMode ? 'bg-gray-950' : 'bg-slate-50'
       }`}
     >
       <form
@@ -86,13 +86,21 @@ const SearchForm = ({
       </form>
 
       <div className='w-full max-w-[1280px] flex justify-center flex-1 pt-12 pb-12 pl-4 pr-4 md:pl-36 md:pr-36'>
-        <div className='flex-1 flex flex-col font-bold sm:border-r-2 sm:border-white'>
+        <div
+          className={`flex-1 flex flex-col font-bold sm:border-r-2 ${
+            isDarkMode ? 'sm:border-white' : 'sm:border-gray-400'
+          }`}
+        >
           <div className='flex flex-shrink gap-4 justify-center sm:justify-start sm:min-w-[253px]'>
             <div className='text-xl font-bold text-nowrap'>최근 검색어</div>
             {searchList.length > 0 && (
               <button
                 onClick={removeSearchList}
-                className='text-sm text-nowrap border p-1 text-gray-100 border-gray-100 opacity-30 hover:opacity-70'
+                className={`text-sm text-nowrap border p-1 opacity-30 hover:opacity-70 ${
+                  isDarkMode
+                    ? 'border-gray-100 text-gray-100'
+                    : 'border-black text-black'
+                }`}
               >
                 검색 내역 지우기
               </button>
@@ -112,7 +120,11 @@ const SearchForm = ({
                 </li>
               ))
             ) : (
-              <div className='text-sm text-gray-100 opacity-60'>
+              <div
+                className={`text-sm opacity-60 ${
+                  isDarkMode ? 'text-gray-100' : 'text-gray-900'
+                }`}
+              >
                 검색 내역이 없습니다.
               </div>
             )}
@@ -127,7 +139,13 @@ const SearchForm = ({
                 className='flex items-center gap-2 cursor-pointer'
                 key={`${movie.title}-${index}`}
               >
-                <p className='w-10 text-red-800 text-xl'>{index + 1}</p>
+                <p
+                  className={`w-10 text-xl ${
+                    isDarkMode ? 'text-red-800' : 'text-red-500'
+                  }`}
+                >
+                  {index + 1}
+                </p>
                 <p className='font-serif text-base text-nowrap'>
                   {movie.title.length > 20
                     ? `${movie.title.slice(0, 20)}...`
